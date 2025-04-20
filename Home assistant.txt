@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Home Assistant Dashboard</title>
+    <style>
+        body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+        .page {
+    display: none;
+    max-width: 600px;
+    margin: auto;
+    background: #ffffffdd; /* semi-transparent white */
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+}
+
+        .page.active {
+            display: block;
+        }
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+        .buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    flex: 1 1 120px;
+    max-width: 220px;
+}
+
+        button:hover {
+            background-color: #0056b3;
+        }
+.fan-speed-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.fan-speed-label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.fan-speed-selector {
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.fan-speed-selector:hover {
+    border-color: #0056b3;
+}
+
+.fan-speed-selector:focus {
+    outline: none;
+    border-color: #ff9900;
+}
+/* Responsive Layout Enhancements */
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.page {
+  width: 95%;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  border-radius: 1rem;
+}
+
+h1, h2 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+label, input, select, textarea {
+  font-size: 1rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+form {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+    </style>
+    <script>
+        function openSection(sectionId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <!-- Dashboard Page -->
+    <div id="dashboard" class="page active">
+        <h1>Welcome to AI Home Assistant</h1>
+        <div class="buttons-container">
+            <button onclick="openSection('rooms-dashboard')">Rooms</button>
+            <button onclick="openSection('garage-dashboard')">Garage</button>
+            <button onclick="openSection('garden-dashboard')">Garden</button>
+            <button onclick="openSection('security-dashboard')">Security</button>
+            <button onclick="openSection('settings')">Settings</button>
+            <button onclick="openSection('feedback')">Feedback</button>
+        </div>
+    </div>
+
+    <!-- Rooms Dashboard -->
+    <div id="rooms-dashboard" class="page">
+        <h2>Rooms</h2>
+        <div class="buttons-container">
+            <button onclick="openSection('kitchen')">Kitchen</button>
+            <button onclick="openSection('living-room')">Living Room</button>
+            <button onclick="openSection('bedroom-1')">Bedroom 1</button>
+            <button onclick="openSection('bedroom-2')">Bedroom 2</button>
+            <button onclick="openSection('guest-room')">Guest Room</button>
+        </div>
+        <button onclick="openSection('dashboard')">Back</button>
+    </div>
+<div id="living-room" class="page">
+    <h2>Living Room Appliances</h2>
+    <div class="buttons-container">
+        <button onclick="openSection('lights')">Lights</button>
+        <button onclick="openSection('fans')">Fans</button>
+        <button onclick="openSection('ac')">AC</button>
+        <button onclick="openSection('living-room-tv')">TV</button>
+        <button onclick="openSection('living-room-speakers')">Speakers</button>
+    </div>
+    <button onclick="openSection('rooms-dashboard')">Back</button>
+</div>
+<div id="bedroom-1" class="page">
+    <h2>Bedroom 1 Appliances</h2>
+    <div class="buttons-container">
+        <button onclick="openSection('lights')">Lights</button>
+        <button onclick="openSection('fans')">Fans</button>
+        <button onclick="openSection('ac')">AC</button>
+        <button onclick="openSection('heater')">Heater</button>
+    </div>
+    <button onclick="openSection('rooms-dashboard')">Back</button>
+</div>
+<div id="bedroom-2" class="page">
+    <h2>Bedroom 2 Appliances</h2>
+    <div class="buttons-container">
+        <button onclick="openSection('lights')">Lights</button>
+        <button onclick="openSection('fans')">Fans</button>
+        <button onclick="openSection('ac')">AC</button>
+        <button onclick="openSection('heater')">Heater</button>
+    </div>
+    <button onclick="openSection('rooms-dashboard')">Back</button>
+</div>
+<div id="guest-room" class="page">
+    <h2>Guest Room Appliances</h2>
+    <div class="buttons-container">
+        <button onclick="openSection('lights')">Lights</button>
+        <button onclick="openSection('fans')">Fans</button>
+        <button onclick="openSection('ac')">AC</button>
+        <button onclick="openSection('heater')">Heater</button>
+    </div>
+    <button onclick="openSection('rooms-dashboard')">Back</button>
+</div>
+<div id="lights" class="page">
+    <h2>Lights Control</h2>
+    <div class="buttons-container">
+        <button>Small Light ON</button>
+        <button>Small Light OFF</button>
+        <button>Big Light ON</button>
+        <button>Big Light OFF</button>
+    </div>
+    <button onclick="openSection('rooms-dashboard')">Back</button>
+</div>
+<div id="fans-control" class="page">
+    <h2>Fans Control</h2>
+    <div class="buttons-container">
+        <button>Fan 1 ON</button>
+        <button>Fan 1 OFF</button>
+        <label>Fan 1 Speed:</label>
+        <select>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select>
+        <button>Fan 2 ON</button>
+        <button>Fan 2 OFF</button>
+        <label>Fan 2 Speed:</label>
+        <select>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select>
+    </div>
+    <button onclick="openSection('rooms-dashboard')">Back</button>
+</div>
+<div id="ac-control" class="page">
+    <h2>AC Control</h2>
+    <div class="buttons-container">
+        <button>Turn ON</button>
+        <button>Turn OFF</button>
+        <button>Increase Temperature</button>
+        <button>Decrease Temperature</button>
+    </div>
+    <button onclick="openSection('rooms-dashboard')">Back</button>
+</div>
+<div id="heater-control" class="page">
+    <h2>Heater Control</h2>
+    <div class="buttons-container">
+        <button>Turn ON</button>
+        <button>Turn OFF</button>
+        <button>Increase Heat</button>
+        <button>Decrease Heat</button>
+    </div>
+    <button onclick="openSection('rooms-dashboard')">Back</button>
+</div>
+<div id="feedback-dashboard" class="page">
+    <h2>Feedback</h2>
+    <p>Let us know your feedback or report any issues with the appliances.</p>
+    <form>
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="appliance">Appliance (if any issue):</label>
+        <input type="text" id="appliance" name="appliance"><br><br>
+
+        <label for="message">Feedback/Issue:</label><br>
+        <textarea id="message" name="message" rows="4" cols="40" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+    <button onclick="openSection('dashboard')">Back</button>
+</div>
+
+    <div id="kitchen" class="page">
+    <h2>Kitchen Appliances</h2>
+    <div class="buttons-container">
+        <button onclick="openSection('microwave')">Microwave</button>
+        <button onclick="openSection('air-fryer')">Air Fryer</button>
+        <button onclick="openSection('fridge')">Fridge</button>
+        <button onclick="openSection('mixer-grinder')">Mixer Grinder</button>
+        <button onclick="openSection('ro-purifier')">RO Purifier</button>
+    </div>
+    <button onclick="openSection('rooms-dashboard')">Back</button>
+	</div>
+	<div id="garage-dashboard" class="page">
+    <h2>Garage Appliances</h2>
+    <div class="buttons-container">
+        <button onclick="openSection('garage-door')">Garage Door</button>
+        <button onclick="openSection('lights')">Lights</button>
+        <button onclick="openSection('fans')">Fans</button>
+        <button onclick="openSection('ac')">AC</button>
+    </div>
+    <button onclick="openSection('dashboard')">Back</button>
+</div>
+<div id="garden-dashboard" class="page">
+    <h2>Garden Appliances</h2>
+    <div class="buttons-container">
+        <button onclick="openSection('garden-water')">Water Control</button>
+        <button onclick="openSection('garden-lights')">Lights</button>
+    </div>
+    <button onclick="openSection('dashboard')">Back</button>
+</div>
+<div id="garden-water" class="page">
+    <h2>Garden Water Control</h2>
+    <div class="buttons-container">
+        <button>Start Watering</button>
+        <button>Stop Watering</button>
+        <button>Schedule Watering</button>
+    </div>
+    <button onclick="openSection('garden-dashboard')">Back</button>
+</div>
+<div id="garden-lights" class="page">
+    <h2>Garden Lights Control</h2>
+    <div class="buttons-container">
+        <button>Turn ON</button>
+        <button>Turn OFF</button>
+        <button>Set Timer</button>
+    </div>
+    <button onclick="openSection('garden-dashboard')">Back</button>
+</div>
+<div id="security-dashboard" class="page">
+    <h2>Security System</h2>
+    <div class="buttons-container">
+        <button onclick="openSection('main-gate-camera')">Main Gate Camera</button>
+        <button onclick="openSection('lobby-camera')">Lobby Camera</button>
+        <button onclick="openSection('security-alarms')">Alarms</button>
+        <button onclick="openSection('door-locks')">Door Locks</button>
+    </div>
+    <button onclick="openSection('dashboard')">Back</button>
+</div>
+<div id="main-gate-camera" class="page">
+    <h2>Main Gate Camera</h2>
+    <div class="buttons-container">
+        <button>View Live Feed</button>
+        <button>Record Footage</button>
+        <button>Playback Recording</button>
+    </div>
+    <button onclick="openSection('security-dashboard')">Back</button>
+</div>
+<div id="lobby-camera" class="page">
+    <h2>Lobby Camera</h2>
+    <div class="buttons-container">
+        <button>View Live Feed</button>
+        <button>Record Footage</button>
+        <button>Playback Recording</button>
+    </div>
+    <button onclick="openSection('security-dashboard')">Back</button>
+</div>
+<div id="security-alarms" class="page">
+    <h2>Security Alarms</h2>
+    <div class="buttons-container">
+        <button>Activate Alarm</button>
+        <button>Deactivate Alarm</button>
+        <button>Test Alarm</button>
+    </div>
+    <button onclick="openSection('security-dashboard')">Back</button>
+</div>
+<div id="door-locks" class="page">
+    <h2>Door Locks</h2>
+    <div class="buttons-container">
+        <button>Lock All Doors</button>
+        <button>Unlock All Doors</button>
+        <button>Check Lock Status</button>
+    </div>
+    <button onclick="openSection('security-dashboard')">Back</button>
+</div>
+<div id="settings-dashboard" class="page">
+    <h2>Settings</h2>
+    <div class="buttons-container">
+        <button onclick="openSection('theme-settings')">Theme Settings</button>
+        <button onclick="openSection('security-pass')">Security & Access</button>
+        <button onclick="openSection('notifications')">Notifications</button>
+        <button onclick="openSection('device-management')">Device Management</button>
+    </div>
+    <button onclick="openSection('dashboard')">Back</button>
+</div>
+<div id="settings" class="page">
+    <h2>Settings</h2>
+    <div class="buttons-container">
+        <button onclick="openSection('theme-settings')">Theme Settings</button>
+        <button onclick="openSection('security-pass')">Security & Access</button>
+        <button onclick="openSection('notifications')">Notifications</button>
+        <button onclick="openSection('device-management')">Device Management</button>
+    </div>
+    <button onclick="openSection('dashboard')">Back</button>
+</div>
+
+<div id="theme-settings" class="page">
+    <h2>Theme Settings</h2>
+    <div class="buttons-container">
+        <button>Light Mode</button>
+        <button>Dark Mode</button>
+        <button>Custom Theme</button>
+    </div>
+    <button onclick="openSection('settings-dashboard')">Back</button>
+</div>
+<div id="security-pass" class="page">
+    <h2>Security & Access</h2>
+    <div class="buttons-container">
+        <button>Change Password</button>
+        <button>Enable 2FA</button>
+        <button>Manage Access Levels</button>
+    </div>
+    <button onclick="openSection('settings-dashboard')">Back</button>
+</div>
+<div id="notifications" class="page">
+    <h2>Notification Settings</h2>
+    <div class="buttons-container">
+        <button>Enable Notifications</button>
+        <button>Disable Notifications</button>
+        <button>Customize Alerts</button>
+    </div>
+    <button onclick="openSection('settings-dashboard')">Back</button>
+</div>
+<div id="device-management" class="page">
+    <h2>Device Management</h2>
+    <div class="buttons-container">
+        <button>View Connected Devices</button>
+        <button>Remove Device</button>
+        <button>Update Firmware</button>
+    </div>
+    <button onclick="openSection('settings-dashboard')">Back</button>
+</div>
+
+<div id="garage-door" class="page">
+    <h2>Garage Door Control</h2>
+    <div class="buttons-container">
+        <button>Open</button>
+        <button>Close</button>
+        <button>Lock</button>
+        <button>Unlock</button>
+    </div>
+    <button onclick="openSection('garage-dashboard')">Back</button>
+</div>
+<div id="garage-lights" class="page">
+    <h2>Garage Lights Control</h2>
+    <div class="buttons-container">
+        <button>Turn ON</button>
+        <button>Turn OFF</button>
+    </div>
+    <button onclick="openSection('garage-dashboard')">Back</button>
+</div>
+<div id="garage-fans" class="page">
+    <h2>Garage Fans Control</h2>
+    <div class="buttons-container">
+        <button>Turn ON</button>
+        <button>Turn OFF</button>
+        <label>Fan Speed:</label>
+        <select>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select>
+    </div>
+    <button onclick="openSection('garage-dashboard')">Back</button>
+</div>
+<div id="garage-ac" class="page">
+    <h2>Garage AC Control</h2>
+    <div class="buttons-container">
+        <button>Turn ON</button>
+        <button>Turn OFF</button>
+        <button>Increase Temperature</button>
+        <button>Decrease Temperature</button>
+    </div>
+    <button onclick="openSection('garage-dashboard')">Back</button>
+</div>
+
+	<div id="microwave" class="page">
+    <h2>Microwave Control</h2>
+    <div class="buttons-container">
+        <button>Turn ON</button>
+        <button>Turn OFF</button>
+        <button>Increase Time</button>
+        <button>Decrease Time</button>
+    </div>
+    <button onclick="openSection('kitchen')">Back</button>
+</div>
+	<div id="air-fryer" class="page">
+    <h2>Air Fryer Control</h2>
+    <div class="buttons-container">
+        <button>Turn ON</button>
+        <button>Turn OFF</button>
+        <button>Increase Temperature</button>
+        <button>Decrease Temperature</button>
+        <button>Set Timer</button>
+    </div>
+    <button onclick="openSection('kitchen')">Back</button>
+</div>
+	<div id="fridge" class="page">
+    <h2>Fridge Control</h2>
+    <div class="buttons-container">
+        <button>Increase Temperature</button>
+        <button>Decrease Temperature</button>
+        <button>Open Door Alarm</button>
+    </div>
+    <button onclick="openSection('kitchen')">Back</button>
+</div>
+	<div id="mixer-grinder" class="page">
+    <h2>Mixer Grinder Control</h2>
+    <div class="buttons-container">
+        <button>Turn ON</button>
+        <button>Turn OFF</button>
+        <button>Increase Speed</button>
+        <button>Decrease Speed</button>
+    </div>
+    <button onclick="openSection('kitchen')">Back</button>
+</div>
+	<div id="ro-purifier" class="page">
+    <h2>RO Purifier Control</h2>
+    <div class="buttons-container">
+        <button>Start Purification</button>
+        <button>Stop Purification</button>
+        <button>Check Filter Status</button>
+    </div>
+    <button onclick="openSection('kitchen')">Back</button>
+</div>
+
+    <!-- Lights Control Page -->
+    <div id="lights" class="page">
+        <h2>Lights Control</h2>
+        <div class="buttons-container">
+            <button>Small Light ON</button>
+            <button>Small Light OFF</button>
+            <button>Big Light ON</button>
+            <button>Big Light OFF</button>
+        </div>
+        <button onclick="openSection('rooms-dashboard')">Back</button>
+    </div>
+
+    <!-- AC Control Page -->
+    <div id="ac" class="page">
+        <h2>AC Control</h2>
+        <div class="buttons-container">
+            <button>Turn ON</button>
+            <button>Turn OFF</button>
+            <button>Increase Temperature</button>
+            <button>Decrease Temperature</button>
+        </div>
+        <button onclick="openSection('rooms-dashboard')">Back</button>
+    </div>
+
+    <!-- Heater Control Page -->
+    <div id="heater" class="page">
+        <h2>Heater Control</h2>
+        <div class="buttons-container">
+            <button>Turn ON</button>
+            <button>Turn OFF</button>
+            <button>Increase Heat</button>
+            <button>Decrease Heat</button>
+        </div>
+        <button onclick="openSection('rooms-dashboard')">Back</button>
+    </div>
+
+    <!-- Fans Control Page -->
+    <div id="fans" class="page">
+        <h2>Fans Control</h2>
+        <div class="buttons-container">
+            <button>Fan 1 ON</button>
+            <button>Fan 1 OFF</button>
+            <label>Fan 1 Speed:</label>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+            <button>Fan 2 ON</button>
+            <button>Fan 2 OFF</button>
+            <label>Fan 2 Speed:</label>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+        </div>
+        <button onclick="openSection('rooms-dashboard')">Back</button>
+    </div>
+</body>
+</html>
